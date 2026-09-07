@@ -273,8 +273,7 @@ function renderTickets(){
     pasajes.forEach((src, idx) => {
       const card = document.createElement("div");
       card.className = "ticket-card";
-      card.innerHTML = `<img src="${encodeURI(src)}" alt="Pasaje ${idx+1}">`;
-      grid.appendChild(card);
+card.innerHTML = `<a href="${encodeURI(src)}" target="_blank" rel="noopener noreferrer"><img src="${encodeURI(src)}" alt="Pasaje ${idx+1}"></a>`;      grid.appendChild(card);
     });
   }
 }
