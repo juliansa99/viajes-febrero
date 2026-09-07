@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viajes de febrero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <svg class="brand-mark" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M2 16.5L22 12L2 7.5V10.5L16 12L2 13.5V16.5Z" fill="currentColor"/>
+      </svg>
+      <span>Cuaderno de viaje</span>
+    </div>
+    <div class="header-note">Viaje Jubi · Febrero 2027</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME VIEW ============ -->
+  <section id="view-home" class="view">
+    <div class="wrap">
+      <div class="intro">
+        <h1>¿A dónde nos vamos?</h1>
+        <p class="intro-sub">Cuatro recorridos armados con fechas, gastos y logística. Elegí uno para ver el día a día completo, guardar los pasajes y anotar los alojamientos.</p>
+      </div>
+
+      <div class="pass-grid" id="pass-grid">
+        <!-- cards injected by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DETAIL VIEW ============ -->
+  <section id="view-detail" class="view" hidden>
+    <div class="wrap">
+
+      <button class="back-link" id="btn-back" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Todos los viajes
+      </button>
+
+      <div class="dossier-head" id="dossier-head">
+        <!-- injected -->
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab-btn is-active" data-tab="itinerario">Itinerario</button>
+        <button class="tab-btn" data-tab="gastos">Gastos</button>
+        <button class="tab-btn" data-tab="documentos">Pasajes y alojamiento</button>
+      </nav>
+
+      <div class="tab-panel is-active" id="panel-itinerario">
+        <div class="tab-panel is-active" id="panel-itinerario">
+  <div class="map-container" id="map-container"></div>
+  <ol class="timeline" id="timeline-list"></ol>
+</div>
+        <ol class="timeline" id="timeline-list"></ol>
+      </div>
+
+      <div class="tab-panel" id="panel-gastos">
+        <div class="receipt" id="receipt">
+          <!-- injected -->
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-documentos">
+
+        <div class="doc-block">
+          <div class="doc-block-head">
+            <h3>Pasajes</h3>
+            <label class="btn btn-small" for="input-flight-image">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Agregar imagen
+            </label>
+            <input type="file" id="input-flight-image" accept="image/*" hidden>
+          </div>
+          <p class="doc-hint">Subí capturas o fotos de los pasajes de ida y vuelta. Se guardan en este navegador.</p>
+          <div class="ticket-grid" id="ticket-grid"></div>
+          <p class="empty-note" id="ticket-empty">Todavía no cargaste ningún pasaje para este viaje.</p>
+        </div>
+
+        <div class="doc-block">
+          <div class="doc-block-head">
+            <h3>Alojamiento</h3>
+          </div>
+          <p class="doc-hint">Guardá los links de Airbnb, hoteles o pousadas que estén evaluando.</p>
+
+          <form class="stay-form" id="stay-form">
+            <input type="text" id="stay-name" placeholder="Nombre del lugar (ej: Depto en San Sebastián)" required>
+            <input type="url" id="stay-url" placeholder="Link (Airbnb, Booking, etc.)" required>
+            <input type="text" id="stay-note" placeholder="Notas (fechas, precio, opinión...)">
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </form>
+
+          <ul class="stay-list" id="stay-list"></ul>
+          <p class="empty-note" id="stay-empty">Todavía no agregaste alojamientos para este viaje.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">Hecho a mano para planear el viaje de febrero.</div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
