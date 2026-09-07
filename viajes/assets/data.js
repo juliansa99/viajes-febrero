@@ -9,6 +9,7 @@ const DESTINATIONS = [
       "#1f5c55"
     ],
     "foto": "images/españa.jpg",
+    "pasajes": ["images/pasaje_españa.png"],
     "sheet": "ESPAÑA",
     "fechaInicio": "Mié 04/feb",
     "fechaFin": "Sáb 28/feb",
@@ -180,6 +181,7 @@ const DESTINATIONS = [
       "#3c7a63"
     ],
     "foto": "images/bariloche.jpg",
+    "pasajes": ["images/pasaje_bariloche.png"],
     "sheet": "ARGENTINA",
     "fechaInicio": "Dom 08/feb",
     "fechaFin": "Jue 26/feb",
@@ -313,6 +315,7 @@ const DESTINATIONS = [
       "#1c8a8a"
     ],
     "foto": "images/noronha.jpg",
+    "pasajes": ["images/pasaje_brasil.png"],
     "sheet": "BRASIL",
     "fechaInicio": "Mar 03/feb",
     "fechaFin": "Vie 20/feb",
@@ -448,6 +451,7 @@ const DESTINATIONS = [
       "#b33f3f"
     ],
     "foto": "images/orlando.jpg",
+    "pasajes": ["images/pasaje_miami.png"],
     "sheet": "MIAMI - ORLANDO",
     "fechaInicio": "Vie 13/feb",
     "fechaFin": "Sáb 28/feb",

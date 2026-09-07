@@ -256,50 +256,47 @@ function renderReceipt(){
 // ---- Documents: tickets + stays ------------------------------
 
 function renderDocuments(){
-  const store = loadStore(currentDest.id);
-  renderTickets(store);
-  renderStays(store);
+  renderTickets();
+  renderStays();
 }
 
-function renderTickets(store){
+function renderTickets(){
   const grid = document.getElementById("ticket-grid");
   const empty = document.getElementById("ticket-empty");
   grid.innerHTML = "";
 
-  if(store.tickets.length === 0){
+  const pasajes = currentDest.pasajes || [];
+  if(pasajes.length === 0){
     empty.classList.add("is-visible");
   }else{
     empty.classList.remove("is-visible");
-    store.tickets.forEach((dataUrl, idx) => {
+    pasajes.forEach((src, idx) => {
       const card = document.createElement("div");
       card.className = "ticket-card";
-      card.innerHTML = `
-        <img src="${dataUrl}" alt="Pasaje ${idx+1}">
-        <button class="ticket-remove" type="button" aria-label="Quitar pasaje" data-idx="${idx}">×</button>
-      `;
+      card.innerHTML = `<img src="${encodeURI(src)}" alt="Pasaje ${idx+1}">`;
       grid.appendChild(card);
     });
   }
 }
 
-function renderStays(store){
+function renderStays(){
   const list = document.getElementById("stay-list");
   const empty = document.getElementById("stay-empty");
   list.innerHTML = "";
 
-  if(store.stays.length === 0){
+  const stays = currentDest.alojamientos || [];
+  if(stays.length === 0){
     empty.classList.add("is-visible");
   }else{
     empty.classList.remove("is-visible");
-    store.stays.forEach((stay, idx) => {
+    stays.forEach((stay) => {
       const li = document.createElement("li");
       li.className = "stay-item";
       li.innerHTML = `
         <div class="stay-item-main">
-          <a href="${stay.url}" target="_blank" rel="noopener noreferrer">${stay.name}</a>
-          ${stay.note ? `<span class="stay-item-note">${stay.note}</span>` : ""}
+          <a href="${stay.url}" target="_blank" rel="noopener noreferrer">${stay.nombre}</a>
+          ${stay.nota ? `<span class="stay-item-note">${stay.nota}</span>` : ""}
         </div>
-        <button class="stay-remove" type="button" data-idx="${idx}">Quitar</button>
       `;
       list.appendChild(li);
     });
@@ -341,51 +338,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("tabs").addEventListener("click", (e) => {
     const btn = e.target.closest(".tab-btn");
     if(btn) switchTab(btn.dataset.tab);
-  });
-
-  document.getElementById("input-flight-image").addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if(!file || !currentDest) return;
-    const dataUrl = await fileToDataUrl(file);
-    const store = loadStore(currentDest.id);
-    store.tickets.push(dataUrl);
-    saveStore(currentDest.id, store);
-    renderTickets(store);
-    e.target.value = "";
-  });
-
-  document.getElementById("ticket-grid").addEventListener("click", (e) => {
-    const btn = e.target.closest(".ticket-remove");
-    if(!btn || !currentDest) return;
-    const idx = Number(btn.dataset.idx);
-    const store = loadStore(currentDest.id);
-    store.tickets.splice(idx, 1);
-    saveStore(currentDest.id, store);
-    renderTickets(store);
-  });
-
-  document.getElementById("stay-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    if(!currentDest) return;
-    const name = document.getElementById("stay-name").value.trim();
-    const url = document.getElementById("stay-url").value.trim();
-    const note = document.getElementById("stay-note").value.trim();
-    if(!name || !url) return;
-
-    const store = loadStore(currentDest.id);
-    store.stays.push({ name, url, note });
-    saveStore(currentDest.id, store);
-    renderStays(store);
-    e.target.reset();
-  });
-
-  document.getElementById("stay-list").addEventListener("click", (e) => {
-    const btn = e.target.closest(".stay-remove");
-    if(!btn || !currentDest) return;
-    const idx = Number(btn.dataset.idx);
-    const store = loadStore(currentDest.id);
-    store.stays.splice(idx, 1);
-    saveStore(currentDest.id, store);
-    renderStays(store);
   });
 });
