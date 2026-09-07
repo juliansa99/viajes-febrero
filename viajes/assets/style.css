@@ -477,8 +477,54 @@ button{ font-family:inherit; }
   padding:13px 24px;
   border-bottom:1px dashed var(--line);
   font-size:0.95rem;
+  width:100%;
+  background:none;
+  border-left:none;
+  border-right:none;
+  border-top:none;
+  text-align:left;
+  font-family:inherit;
+  color:inherit;
 }
-.receipt-row:last-of-type{ border-bottom:none; }
+.receipt-item:last-of-type .receipt-row{ border-bottom:none; }
+.receipt-row.is-expandable{
+  cursor:pointer;
+}
+.receipt-row.is-expandable:hover{
+  background:var(--paper-alt);
+}
+.receipt-row-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+.receipt-chevron{
+  color:var(--ink-soft);
+  transition:transform .15s ease;
+  flex-shrink:0;
+}
+.receipt-row.is-open .receipt-chevron{
+  transform:rotate(90deg);
+}
+.receipt-detail{
+  padding:16px 24px 20px;
+  background:var(--paper-alt);
+  border-bottom:1px dashed var(--line);
+}
+.receipt-detail-block img{
+  max-width:100%;
+  max-height:340px;
+  display:block;
+  border:1px solid var(--line);
+  cursor:zoom-in;
+}
+.receipt-detail .stay-list{
+  gap:8px;
+}
+.receipt-detail .stay-item{
+  background:var(--card);
+}
 .receipt-label{ color:var(--ink); }
 .receipt-note{
   display:block;
@@ -514,85 +560,6 @@ button{ font-family:inherit; }
   font-size:1.7rem;
 }
 
-/* Documents / stays */
-.doc-block{
-  padding:28px 0;
-  border-bottom:1px solid var(--line);
-}
-.doc-block:last-child{ border-bottom:none; }
-.doc-block-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.doc-hint{
-  color:var(--ink-soft);
-  font-size:0.88rem;
-  margin:8px 0 20px;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  border:1px solid var(--navy);
-  background:transparent;
-  color:var(--navy);
-  padding:9px 16px;
-  font-size:0.86rem;
-  font-weight:600;
-  cursor:pointer;
-  border-radius:var(--radius);
-}
-.btn:hover{ background:var(--navy); color:#fff; }
-.btn-small{ padding:7px 13px; font-size:0.82rem; }
-.btn-primary{
-  background:var(--navy);
-  color:#fff;
-}
-.btn-primary:hover{ background:var(--navy-soft); }
-
-.ticket-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(160px,1fr));
-  gap:16px;
-}
-.ticket-card{
-  position:relative;
-  border:1px solid var(--line);
-  background:var(--card);
-  padding:8px;
-}
-.ticket-card a{
-  display:block;
-  cursor:zoom-in;
-}
-.ticket-card img{
-  width:100%;
-  height:220px;
-  object-fit:contain;
-  background:var(--paper-alt);
-  display:block;
-}
-
-.ticket-remove{
-  position:absolute;
-  top:-8px; right:-8px;
-  width:26px; height:26px;
-  border-radius:50%;
-  background:var(--stamp);
-  color:#fff;
-  border:2px solid var(--paper);
-  cursor:pointer;
-  font-size:0.9rem;
-  line-height:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
 .empty-note{
   color:var(--ink-soft);
   font-size:0.88rem;
@@ -601,28 +568,7 @@ button{ font-family:inherit; }
 }
 .empty-note.is-visible{ display:block; }
 
-.stay-form{
-  display:grid;
-  grid-template-columns:1.1fr 1.1fr 1fr auto;
-  gap:10px;
-  margin-bottom:22px;
-}
-.stay-form input{
-  border:1px solid var(--line);
-  background:var(--card);
-  padding:10px 12px;
-  font-size:0.9rem;
-  font-family:inherit;
-  border-radius:var(--radius);
-}
-.stay-form input:focus{
-  outline:none;
-  border-color:var(--navy);
-}
-@media (max-width:800px){
-  .stay-form{ grid-template-columns:1fr; }
-}
-
+/* Accommodation option links (used inside receipt-detail) */
 .stay-list{
   list-style:none;
   margin:0; padding:0;
@@ -651,13 +597,3 @@ button{ font-family:inherit; }
   color:var(--ink-soft);
   margin-top:2px;
 }
-.stay-remove{
-  background:none;
-  border:none;
-  color:var(--stamp);
-  cursor:pointer;
-  font-size:0.82rem;
-  font-weight:600;
-  flex-shrink:0;
-}
-.stay-remove:hover{ text-decoration:underline; }

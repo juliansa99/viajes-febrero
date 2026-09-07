@@ -56,14 +56,10 @@
       <nav class="tabs" id="tabs">
         <button class="tab-btn is-active" data-tab="itinerario">Itinerario</button>
         <button class="tab-btn" data-tab="gastos">Gastos</button>
-        <button class="tab-btn" data-tab="documentos">Pasajes y alojamiento</button>
       </nav>
 
       <div class="tab-panel is-active" id="panel-itinerario">
-        <div class="tab-panel is-active" id="panel-itinerario">
-  <div class="map-container" id="map-container"></div>
-  <ol class="timeline" id="timeline-list"></ol>
-</div>
+        <div class="map-container" id="map-container"></div>
         <ol class="timeline" id="timeline-list"></ol>
       </div>
 
@@ -71,36 +67,6 @@
         <div class="receipt" id="receipt">
           <!-- injected -->
         </div>
-      </div>
-
-      <div class="tab-panel" id="panel-documentos">
-
-       <div class="doc-block">
-  <div class="doc-block-head">
-    <h3>Pasajes</h3>
-  </div>
-  <p class="doc-hint">Pasajes de ida y vuelta de este viaje.</p>
-  <div class="ticket-grid" id="ticket-grid"></div>
-  <p class="empty-note" id="ticket-empty">Todavía no cargamos ningún pasaje para este viaje.</p>
-</div>
-
-        <div class="doc-block">
-          <div class="doc-block-head">
-            <h3>Alojamiento</h3>
-          </div>
-          <p class="doc-hint">Guardá los links de Airbnb, hoteles o pousadas que estén evaluando.</p>
-
-          <form class="stay-form" id="stay-form">
-            <input type="text" id="stay-name" placeholder="Nombre del lugar (ej: Depto en San Sebastián)" required>
-            <input type="url" id="stay-url" placeholder="Link (Airbnb, Booking, etc.)" required>
-            <input type="text" id="stay-note" placeholder="Notas (fechas, precio, opinión...)">
-            <button type="submit" class="btn btn-primary">Agregar</button>
-          </form>
-
-          <ul class="stay-list" id="stay-list"></ul>
-          <p class="empty-note" id="stay-empty">Todavía no agregaste alojamientos para este viaje.</p>
-        </div>
-
       </div>
 
     </div>
@@ -111,8 +77,10 @@
 <footer class="site-footer">
   <div class="wrap">Hecho a mano para planear el viaje de febrero.</div>
 </footer>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>
+  

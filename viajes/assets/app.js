@@ -181,7 +181,6 @@ function openDetail(destId){
   renderMap(currentDest);
   renderTimeline();
   renderReceipt();
-  renderDocuments();
   switchTab("itinerario");
 }
 
@@ -235,15 +234,71 @@ function renderTimeline(){
 function renderReceipt(){
   const el = document.getElementById("receipt");
   el.innerHTML = "";
-  currentDest.costos.forEach(c => {
-    const row = document.createElement("div");
-    row.className = "receipt-row";
+
+  currentDest.costos.forEach((c, idx) => {
+    const hasImagen = !!c.imagen;
+    const hasOpciones = Array.isArray(c.opciones);
+    const isExpandable = hasImagen || hasOpciones;
+
+    const wrap = document.createElement("div");
+    wrap.className = "receipt-item";
+
+    const row = document.createElement(isExpandable ? "button" : "div");
+    row.type = isExpandable ? "button" : undefined;
+    row.className = "receipt-row" + (isExpandable ? " is-expandable" : "");
     row.innerHTML = `
       <span class="receipt-label">${c.label}${c.note ? `<span class="receipt-note">${c.note}</span>` : ""}</span>
-      <span class="receipt-amount">${fmtMoney(c.amount)} ${c.currency || ""}</span>
+      <span class="receipt-row-right">
+        <span class="receipt-amount">${fmtMoney(c.amount)} ${c.currency || ""}</span>
+        ${isExpandable ? `<svg class="receipt-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}
+      </span>
     `;
-    el.appendChild(row);
+    wrap.appendChild(row);
+
+    if(isExpandable){
+      const detail = document.createElement("div");
+      detail.className = "receipt-detail";
+      detail.hidden = true;
+
+      let detailHtml = "";
+
+      if(hasImagen){
+        detailHtml += `
+          <div class="receipt-detail-block">
+            <a href="${encodeURI(c.imagen)}" target="_blank" rel="noopener noreferrer" class="receipt-ticket-link">
+              <img src="${encodeURI(c.imagen)}" alt="Pasaje - ${c.label}">
+            </a>
+          </div>
+        `;
+      }
+
+      if(hasOpciones){
+        if(c.opciones.length === 0){
+          detailHtml += `<p class="empty-note is-visible">Todavía no cargamos opciones de alojamiento acá.</p>`;
+        }else{
+          detailHtml += `<ul class="stay-list">` + c.opciones.map(o => `
+            <li class="stay-item">
+              <div class="stay-item-main">
+                <a href="${o.url}" target="_blank" rel="noopener noreferrer">${o.nombre}</a>
+                ${o.nota ? `<span class="stay-item-note">${o.nota}</span>` : ""}
+              </div>
+            </li>
+          `).join("") + `</ul>`;
+        }
+      }
+
+      detail.innerHTML = detailHtml;
+      wrap.appendChild(detail);
+
+      row.addEventListener("click", () => {
+        detail.hidden = !detail.hidden;
+        row.classList.toggle("is-open", !detail.hidden);
+      });
+    }
+
+    el.appendChild(wrap);
   });
+
   const totalRow = document.createElement("div");
   totalRow.className = "receipt-total";
   totalRow.innerHTML = `
@@ -251,55 +306,6 @@ function renderReceipt(){
     <span class="receipt-total-amount">${fmtMoney(currentDest.gastoTotal)} USD</span>
   `;
   el.appendChild(totalRow);
-}
-
-// ---- Documents: tickets + stays ------------------------------
-
-function renderDocuments(){
-  renderTickets();
-  renderStays();
-}
-
-function renderTickets(){
-  const grid = document.getElementById("ticket-grid");
-  const empty = document.getElementById("ticket-empty");
-  grid.innerHTML = "";
-
-  const pasajes = currentDest.pasajes || [];
-  if(pasajes.length === 0){
-    empty.classList.add("is-visible");
-  }else{
-    empty.classList.remove("is-visible");
-    pasajes.forEach((src, idx) => {
-      const card = document.createElement("div");
-      card.className = "ticket-card";
-card.innerHTML = `<a href="${encodeURI(src)}" target="_blank" rel="noopener noreferrer"><img src="${encodeURI(src)}" alt="Pasaje ${idx+1}"></a>`;      grid.appendChild(card);
-    });
-  }
-}
-
-function renderStays(){
-  const list = document.getElementById("stay-list");
-  const empty = document.getElementById("stay-empty");
-  list.innerHTML = "";
-
-  const stays = currentDest.alojamientos || [];
-  if(stays.length === 0){
-    empty.classList.add("is-visible");
-  }else{
-    empty.classList.remove("is-visible");
-    stays.forEach((stay) => {
-      const li = document.createElement("li");
-      li.className = "stay-item";
-      li.innerHTML = `
-        <div class="stay-item-main">
-          <a href="${stay.url}" target="_blank" rel="noopener noreferrer">${stay.nombre}</a>
-          ${stay.nota ? `<span class="stay-item-note">${stay.nota}</span>` : ""}
-        </div>
-      `;
-      list.appendChild(li);
-    });
-  }
 }
 
 function fileToDataUrl(file){
